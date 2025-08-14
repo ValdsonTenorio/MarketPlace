@@ -1,9 +1,9 @@
-// Importações
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import authRoutes from "./routes/authRoutes.js"; 
+import authRoutes from "./routes/authRoutes.js";
+import productRoutes from "./routes/productRoutes.js";
 
 dotenv.config();
 
@@ -13,19 +13,15 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes); // <-- importante
 
 app.get("/", (req, res) => {
   res.send("API do Marketplace funcionando!");
 });
 
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log("MongoDB conectado!"))
-.catch((err) => console.log("Erro MongoDB:", err));
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB conectado!"))
+  .catch((err) => console.log("Erro MongoDB:", err));
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
-});
+app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));

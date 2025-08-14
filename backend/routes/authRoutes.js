@@ -8,7 +8,5 @@ router.post("/register", register);
 
 router.post("/login", login);
 
-router.post("/products", verifyToken, verifyRole("vendedor"), createProduct);
-
 
 export default router;
